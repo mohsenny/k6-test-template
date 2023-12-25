@@ -1,0 +1,24 @@
+{
+  "name": "load-testing",
+  "version": "1.0.0",
+  "description": "A collection of load & performance testing scripts ready to be invoked on-demand or integrated within CI/CD",
+  "main": "scenarios/conversations.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "setup:unix": "scripts/setup/local.sh",
+    "setup:windows": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command scripts/setup/local.ps1",
+    "test:cloud": "k6 cloud",
+    "test:local": "k6 run",
+    "test:ci": "k6 run scenarios/*.js --out json=report.json"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chai": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/k6": "^0.46.0",
+    "typescript": "^5.3.3"
+  }
+}

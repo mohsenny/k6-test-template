@@ -1,0 +1,44 @@
+name: PR
+
+on: [pull_request]
+
+env:
+  CI: true
+  RUN_TYPE: sanity
+  MY_HOSTNAME: "https://sandbox.nest.messagebird.one"
+  LOAD_TESTING_EMAIL: ${{ secrets.LOAD_TESTING_EMAIL }}
+  LOAD_TESTING_PASSWORD: ${{ secrets.LOAD_TESTING_PASSWORD }}
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Deps
+      run: npm i
+
+    - name: Conversations | Perf Test
+      uses: grafana/k6-action@v0.2.0
+      with:
+        filename: ./scenarios/converations.js
+        flags: --no-thresholds
+
+    - name: Invoke Flow with Webhook | Perf Test
+      uses: grafana/k6-action@v0.2.0
+      with:
+        filename: ./scenarios/flows/invoke.js
+        flags: --no-thresholds
+
+    - name: Create Flow with Webhook | Perf Test
+      uses: grafana/k6-action@v0.2.0
+      with:
+        filename: ./scenarios/flows/create.js
+        flags: --no-thresholds
+
+    - name: Embeddables | Perf Test
+      uses: grafana/k6-action@v0.2.0
+      with:
+        filename: ./scenarios/channels/embeddables.js
+        flags: --no-thresholds
