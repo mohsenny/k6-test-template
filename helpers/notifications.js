@@ -3,7 +3,7 @@ import { options } from './config/configure.js';
 
 export const sendSlackStartedMessage = (testName) => {
   http.post(
-    'https://hooks.slack.com/workflows/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',
+    'https://hooks.slack.com/workflows/xxxx',
     JSON.stringify({
       host: options.host,
       testName: testName,
@@ -21,7 +21,7 @@ export const sendSlackReport = (data, testName) => {
   // const vus = `${data.metrics.vus.values['value']}`;
 
   http.post(
-    'https://hooks.slack.com/workflows/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',
+    'https://hooks.slack.com/workflows/xxxx',
     JSON.stringify({
       host: options.host,
       testName: testName,

@@ -10,16 +10,19 @@ function getEnvVariable(varName) {
 
 const host = getEnvVariable('MY_HOSTNAME');
 const runType = getEnvVariable('RUN_TYPE');
-// const email = getEnvVariable('LOAD_TESTING_EMAIL');
-// const password = getEnvVariable('LOAD_TESTING_PASSWORD');
+// Here you can enforce more mandatory Environmental Variable to be set, i.e.:
+// const email = getEnvVariable('ENVIRONMENT');
+// const email = getEnvVariable('TESTING_EMAIL');
+// const password = getEnvVariable('TESTING_PASSWORD');
 
 export const options = {
-  projectId: 3558752,
+  projectId: 1,
   host,
   runType,
   account: {
     email: 'sample',
     password: 'sample',
-    userId: 'f4832edd-66eb-4941-957b-c77bc6386420',
+    // Pass other global values to be used by all tests
+    // userId: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
   },
 };
