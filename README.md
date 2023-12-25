@@ -66,45 +66,50 @@ See [configure.js](./helpers/config/configure.js) for mandatory environmental va
 Here's a template for a typical load test:
 
 ```js
-import { sleep, group } from 'k6';
-
-// Request Helpers
-import * as accountsRequests from '../helpers/requests/accounts.js';
-import * as contactsRequests from '../helpers/requests/contacts.js';
-
-// Configuration
-import { configuration } from '../helpers/config/index.js';
-const load = require('../load.js').get(configuration.options.runType);
+// imports
 
 // K6 Phase Options
 export const options = {
+  ext: {
+    loadimpact: {
+      // ...
+    },
+  },
   thresholds: {
-    http_req_failed: ['rate < 0.01'] /* http errors should be less than 1% */,
-    http_req_duration: ['p(95) < 500'] /* 95% of requests should be below 500ms */,
+    // ...
   },
   scenarios: {
-    conversations: {
-      executor: 'ramping-vus',
-      gracefulStop: '30s',
-      stages: load.testAbc, // This is where we get the load from what we set in Step 1
-      gracefulRampDown: '30s',
+    jsonPlaceholderPosts: {
+      executor: "ramping-vus",
+      gracefulStop: "30s",
+      stages: load.jsonPlaceholder.getPosts,
+      gracefulRampDown: "30s",
     },
   },
 };
 
-// Setup
 export function setup() {
-  // Login as Admin to get a token
-  let adminToken = accountsRequests.login(configuration.options.account.email, configuration.options.account.password);
-  return { token: adminToken };
+  // ...
 }
 
-// Load Testcase
-export default function (data) {
-  group('Create a Contact', () => {
-    contactsRequests.createContact(workspaceID, data.token);
+// Testcase
+export default function () {
+  group("Get all Posts", () => {
+    jsonPlaceholderRequests.getPosts();
+    sleep(1);
+  });
+
+  group("Create a Post", () => {
+    const payload = {
+      userId: 1,
+      title: "Good post!",
+      body: "This is a good post.",
+    };
+    jsonPlaceholderRequests.createPost(payload);
+    sleep(1);
   });
 }
+
 ```
 
 #### Analyzing the Report
