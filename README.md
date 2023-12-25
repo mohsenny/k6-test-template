@@ -2,7 +2,9 @@
 
 ## Installation
 
-Before running the tests locally, ensure you have `k6` installed and set the necessary environmental variables. Also, install the required NPM modules.
+Before running the tests locally, ensure you have `k6` installed and set the necessary environmental variables. Also, install the required NPM modules and compile the typescript tests (`.ts`) into Javascript files (`.js`) under [dist/](./dist/) which makes them runnable by `k6`.
+
+The following step help you achieve all these in one go.
 
 ### Windows Setup
 

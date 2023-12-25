@@ -9,3 +9,6 @@ export RUN_TYPE="performance"
 
 # Install npm dependencies
 npm install
+
+# Compile Typescript tests into Javascript under dist/
+tsc
