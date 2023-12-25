@@ -6,16 +6,18 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf node_modules",
+    "prettify": "npx prettier --write \"**/*.{js,ts}\"",
     "setup:unix": "scripts/setup/local.sh",
     "setup:windows": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command scripts/setup/local.ps1",
     "test:cloud": "k6 cloud",
-    "test:local": "k6 run",
+    "test:local": "k6 run --out json=test_results.json",
     "test:ci": "k6 run scenarios/*.js --out json=report.json"
   },
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "chai": "^4.3.6"
+    "chai": "^4.3.6",
+    "prettier": "^3.1.1"
   },
   "devDependencies": {
     "@types/k6": "^0.46.0",
